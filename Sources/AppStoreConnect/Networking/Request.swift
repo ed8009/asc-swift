@@ -97,7 +97,13 @@ extension URL {
     init<Response>(
         request: Request<Response>
     ) throws {
-        let url = request.baseURL.appendingPathComponent(request.path)
+
+        let url: URL
+        if request.path.isEmpty {
+            url = request.baseURL
+        } else {
+            url = request.baseURL.appendingPathComponent(request.path)
+        }
 
         guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             throw URLError(.badURL)
