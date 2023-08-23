@@ -52,7 +52,9 @@ public actor AppStoreConnectClient {
     /// - Throws: An error describing the manner in which the request failed to complete.
     public func send(_ request: Request<Void>) async throws {
         let urlRequest = try URLRequest(request: request, encoder: encoder, authenticator: &authenticator)
+        print("---> send request: \(urlRequest)")
         let response = try await transport.send(request: urlRequest, decoder: decoder)
+        print("<--- response: \(response)")
         try response.check()
     }
 
@@ -62,7 +64,9 @@ public actor AppStoreConnectClient {
     /// - Throws: An error describing the manner in which the request failed to complete.
     public func send<Response>(_ request: Request<Response>) async throws -> Response where Response: Decodable {
         let urlRequest = try URLRequest(request: request, encoder: encoder, authenticator: &authenticator)
+        print("---> send request: \(urlRequest)")
         let response = try await transport.send(request: urlRequest, decoder: decoder)
+        print("<--- response: \(response)")
         try response.check()
 
         return try response.decode(using: decoder)
@@ -91,7 +95,9 @@ public actor AppStoreConnectClient {
         }
 
         let urlRequest = try URLRequest(url: nextPage, encoder: encoder, authenticator: &authenticator)
+        print("---> send request: \(urlRequest)")
         let response = try await transport.send(request: urlRequest, decoder: decoder)
+        print("<--- response: \(response)")
         try response.check()
 
         return try response.decode(using: decoder)
