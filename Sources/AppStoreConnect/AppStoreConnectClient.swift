@@ -54,7 +54,7 @@ public actor AppStoreConnectClient {
         let urlRequest = try URLRequest(request: request, encoder: encoder, authenticator: &authenticator)
         print("---> send request: \(request)")
         let response = try await transport.send(request: urlRequest, decoder: decoder)
-        print("<--- response: \(try response.decode(using: decoder) as Response)")
+        print("<--- response: \(response)")
         try response.check()
     }
 
