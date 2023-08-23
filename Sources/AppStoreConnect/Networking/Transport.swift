@@ -178,6 +178,9 @@ extension URLSession: Transport {
         #else
         let (responseData, response) = try await upload(for: request, from: data)
 
+        print("---> send request: \(request)")
+        print("allHTTPHeaderFields: \(request.allHTTPHeaderFields)")
+
         guard let response = response as? HTTPURLResponse else {
             throw TransportError.unrecognizedResponse
         }
