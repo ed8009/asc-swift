@@ -66,6 +66,14 @@ extension URLSession: Transport {
         #else
         let (data, response) = try await data(for: request)
 
+        print("---> Send request: \(request)")
+        print("HeaderFields: \(String(describing: request.allHTTPHeaderFields))")
+        if let body = request.httpBody {
+            print("body:: \(body.prettyPrintedJSONString ?? "")")
+        }
+
+        print("<--- response: \(data.prettyPrintedJSONString ?? "")")
+
         guard let response = response as? HTTPURLResponse else {
             throw TransportError.unrecognizedResponse
         }
@@ -189,8 +197,13 @@ extension URLSession: Transport {
         #else
         let (responseData, response) = try await upload(for: request, from: data)
 
-        print("---> send request: \(request)")
-        print("allHTTPHeaderFields: \(request.allHTTPHeaderFields)")
+        print("---> Send request: \(request)")
+        print("HeaderFields: \(String(describing: request.allHTTPHeaderFields))")
+        if let body = request.httpBody {
+            print("body:: \(body.prettyPrintedJSONString ?? "")")
+        }
+
+        print("<--- response: \(data.prettyPrintedJSONString ?? "")")
 
         guard let response = response as? HTTPURLResponse else {
             throw TransportError.unrecognizedResponse
